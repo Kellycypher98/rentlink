@@ -5,8 +5,8 @@
  * @usage { envVariable } = useConfiguration()
  */
 
-import { Utility } from '@web/libraries/utility'
-import { ConfigurationType } from '@web/pages/api/configuration'
+import { Utility } from '../../libraries/utility'
+import { ConfigurationType } from '../../pages/api/configuration'
 import {
   ReactNode,
   createContext,
@@ -16,37 +16,25 @@ import {
 } from 'react'
 import { HttpService } from '../http'
 
-export type ConfigurationContextType = {
-  isEnvironmentProduction: boolean
-  isEnvironmentDevelopment: boolean
-  isMarblismMichelangeloActive: boolean
-  localEmailServerUrl: string
-  apiBaseUrl: string
-  googleClientId?: string
-  toolBaseUrl?: string
-  mapboxAccessToken?: string
-}
 
-const ConfigurationContext = createContext<ConfigurationContextType>(undefined)
+const ConfigurationContext = createContext(undefined)
 
-export const useConfiguration = (): ConfigurationContextType => {
+export const useConfiguration = () => {
   return useContext(ConfigurationContext)
 }
 
-type Props = {
-  children: ReactNode
-}
 
-export const ConfigurationProvider: React.FC<Props> = ({ children }) => {
+
+export const ConfigurationProvider = ({ children }) => {
   const [isLoading, setLoading] = useState<boolean>(true)
   const [values, setValues] = useState<ConfigurationType>({})
 
-  let apiBaseUrl: string = values.API_BASE_URL ?? 'http://localhost:3099'
+  let apiBaseUrl = values.API_BASE_URL ?? 'http://localhost:3099'
 
   useEffect(() => {
     fetch('/api/configuration')
       .then(res => res.json())
-      .then((configuration: ConfigurationType) => {
+      .then((configuration) => {
         setValues(configuration)
 
         const apiBaseUrlRaw =

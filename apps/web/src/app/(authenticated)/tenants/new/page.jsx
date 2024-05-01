@@ -1,60 +1,56 @@
-'use client'
+import { Form, Input, Button, Select, Typography } from "antd";
+import { UserOutlined, MailOutlined } from "@ant-design/icons";
+import { useAuthentication } from "../../../../modules/authentication";
+import dayjs from "dayjs";
+import { useSnackbar } from "notistack";
+import { useRouter, useParams } from "next/navigation";
+import { Api, Model } from "../../../../domain";
+import { PageLayout } from "../../../../layouts/Page.layout";
 
-import { Form, Input, Button, Select, Typography } from 'antd'
-import { UserOutlined, MailOutlined } from '@ant-design/icons'
-const { Title, Text } = Typography
-const { Option } = Select
-import { useAuthentication } from '@web/modules/authentication'
-import dayjs from 'dayjs'
-import { useSnackbar } from 'notistack'
-import { useRouter, useParams } from 'next/navigation'
-import { Api, Model } from '@web/domain'
-import { PageLayout } from '@web/layouts/Page.layout'
+const { Title, Text } = Typography;
+const { Option } = Select;
 
 export default function AddTenantPage() {
-  const router = useRouter()
-  const params = useParams<any>()
-  const authentication = useAuthentication()
-  const userId = authentication.user?.id
-  const { enqueueSnackbar } = useSnackbar()
-  const [form] = Form.useForm()
-  const [properties, setProperties] = React.useState<Model.Property[]>([])
+  const router = useRouter();
+  const params = useParams();
+  const authentication = useAuthentication();
+  const userId = authentication.user?.id;
+  const { enqueueSnackbar } = useSnackbar();
+  const [form] = Form.useForm();
+  const [properties, setProperties] = React.useState([]);
 
   React.useEffect(() => {
     const fetchProperties = async () => {
       if (userId) {
         try {
           const properties = await Api.Property.findManyByLandlordId(userId, {
-            includes: ['tenants'],
-          })
-          setProperties(properties)
+            includes: ["tenants"],
+          });
+          setProperties(properties);
         } catch (error) {
-          enqueueSnackbar('Failed to fetch properties', { variant: 'error' })
+          enqueueSnackbar("Failed to fetch properties", { variant: "error" });
         }
       }
-    }
-    fetchProperties()
-  }, [userId])
+    };
+    fetchProperties();
+  }, [userId]);
 
-  const handleFormSubmit = async (values: {
-    email: string
-    propertyId: string
-  }) => {
+  const handleFormSubmit = async (values) => {
     try {
       const newTenant = await Api.Tenant.createOneByPropertyId(
         values.propertyId,
-        { userId: values.email },
-      )
-      enqueueSnackbar('Tenant added successfully', { variant: 'success' })
-      router.push(`/tenants/${newTenant.id}`)
+        { userId: values.email }
+      );
+      enqueueSnackbar("Tenant added successfully", { variant: "success" });
+      router.push(`/tenants/${newTenant.id}`);
     } catch (error) {
-      enqueueSnackbar('Failed to add tenant', { variant: 'error' })
+      enqueueSnackbar("Failed to add tenant", { variant: "error" });
     }
-  }
+  };
 
   return (
     <PageLayout layout="full-width">
-      <div style={{ maxWidth: '600px', margin: '0 auto' }}>
+      <div style={{ maxWidth: "600px", margin: "0 auto" }}>
         <Title level={2}>Add New Tenant</Title>
         <Text type="secondary">
           Enter the details of the tenant you wish to add to your property.
@@ -70,10 +66,10 @@ export default function AddTenantPage() {
           </Form.Item>
           <Form.Item
             name="propertyId"
-            rules={[{ required: true, message: 'Please select the property!' }]}
+            rules={[{ required: true, message: "Please select the property!" }]}
           >
             <Select placeholder="Select Property" allowClear>
-              {properties.map(property => (
+              {properties.map((property) => (
                 <Option key={property.id} value={property.id}>
                   {property.address}
                 </Option>
@@ -89,5 +85,5 @@ export default function AddTenantPage() {
         </Form>
       </div>
     </PageLayout>
-  )
+  );
 }

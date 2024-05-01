@@ -3,24 +3,20 @@ import React, { ReactNode, createContext, useContext, useState } from 'react'
 import { useConfiguration } from '../configuration'
 import { SocketClient } from './socket.client'
 
-type Context = {
-  client: SocketClient
-}
 
-const SocketContext = createContext<Context>(undefined)
 
-type Props = {
-  children: ReactNode
-}
+const SocketContext = createContext(undefined)
 
-export const SocketProvider: React.FC<Props> = ({ children }): ReactNode => {
+
+
+export const SocketProvider = ({ children }) => {
   const authentication = useAuthentication()
 
   const { apiBaseUrl: baseUrl } = useConfiguration()
 
   const token = authentication?.user?.id
 
-  const [client, setClient] = useState<SocketClient>()
+  const [client, setClient] = useState()
 
   // useEffect(() => {
   //   const userId = authentication?.user?.id
@@ -49,6 +45,6 @@ export const SocketProvider: React.FC<Props> = ({ children }): ReactNode => {
   )
 }
 
-export const useCoreSocket = (): Context => {
+export const useCoreSocket = () => {
   return useContext(SocketContext)
 }

@@ -1,5 +1,3 @@
-'use client'
-
 import { ConfigurationProvider } from '../core/configuration'
 import { CoreStoreProvider } from '../core/store'
 import { DesignSystem, MrbHtml, MrbMain } from '../designSystem'
@@ -9,7 +7,7 @@ import { GoogleOauth } from '../modules/googleOauth'
 import { ReactNode } from 'react'
 import { SocketProvider } from '../core/socket'
 
-export default function AppLayout({ children }: { children: ReactNode }) {
+export default function AppLayout({ children }) {
   return (
     <>
       <MrbHtml>

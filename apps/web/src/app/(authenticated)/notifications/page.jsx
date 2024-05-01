@@ -1,6 +1,6 @@
 import { Flex, Typography } from 'antd'
 
-import { useHttpAction } from '../../../core/http/http.action.hook'
+import { useHttpAction } from '../../../core/http/internal/http.action.hook'
 import { useCoreStore } from '../../../core/store'
 import { Api } from '../../../domain'
 import { PageLayout } from '../../../layouts/Page.layout'

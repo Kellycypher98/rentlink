@@ -1,23 +1,22 @@
-'use client'
-
 import { useEffect, useState } from 'react'
 import { Typography, Table, Button, Space, Avatar } from 'antd'
 import { UserOutlined } from '@ant-design/icons'
-const { Title, Text } = Typography
-import { useAuthentication } from '@web/modules/authentication'
+import { useAuthentication } from '../../../modules/authentication'
 import dayjs from 'dayjs'
 import { useSnackbar } from 'notistack'
 import { useRouter, useParams } from 'next/navigation'
-import { Api, Model } from '@web/domain'
-import { PageLayout } from '@web/layouts/Page.layout'
+import { Api, Model } from '../../../domain'
+import { PageLayout } from '../../../layouts/Page.layout'
+
+const { Title, Text } = Typography
 
 export default function TenantManagementPage() {
   const router = useRouter()
-  const params = useParams<any>()
+  const params = useParams()
   const authentication = useAuthentication()
   const userId = authentication.user?.id
   const { enqueueSnackbar } = useSnackbar()
-  const [tenants, setTenants] = useState<Model.Tenant[]>([])
+  const [tenants, setTenants] = useState([])
 
   useEffect(() => {
     if (userId) {
@@ -93,7 +92,7 @@ export default function TenantManagementPage() {
     },
   ]
 
-  const handleDelete = (tenantId: string) => {
+  const handleDelete = (tenantId) => {
     Api.Tenant.deleteOne(tenantId)
       .then(() => {
         enqueueSnackbar('Tenant deleted successfully', { variant: 'success' })
@@ -111,7 +110,7 @@ export default function TenantManagementPage() {
       <Title level={2}>Tenant Management</Title>
       <Text>
         Manage and view all tenants associated with your properties. Click on
-        'Details' to view more information about a tenant or 'Delete' to remove
+        Details to view more information about a tenant or Delete to remove
         a tenant.
       </Text>
       <Table dataSource={tenants} columns={columns} rowKey="id" />

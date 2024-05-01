@@ -1,6 +1,4 @@
-'use client'
-
-import { RouterObject } from '@web/core/router'
+import { RouterObject } from '../core/router'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 

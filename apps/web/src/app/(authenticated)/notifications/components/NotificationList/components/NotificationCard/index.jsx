@@ -1,23 +1,13 @@
-import { CloseOutlined } from '@ant-design/icons'
-import { Model } from '@web/domain'
-import { Avatar, Button, Card, Flex, Typography } from 'antd'
-import React from 'react'
+import { CloseOutlined } from "@ant-design/icons";
+import { Model } from "../../../../../../../domain";
+import { Avatar, Button, Card, Flex, Typography } from "antd";
+import React from "react";
 
-const { Text, Paragraph } = Typography
+const { Text, Paragraph } = Typography;
 
-type Props = {
-  notification: Model.Notification
-  onClick: () => void
-  onDelete: () => void
-}
-
-export const NotificationCard: React.FC<Props> = ({
-  notification,
-  onClick,
-  onDelete,
-}) => {
+export const NotificationCard = ({ notification, onClick, onDelete }) => {
   return (
-    <Card onClick={onClick} style={{ marginBottom: 16, width: '100%' }}>
+    <Card onClick={onClick} style={{ marginBottom: 16, width: "100%" }}>
       <Flex gap="middle">
         <Avatar src={notification.senderPictureUrl}>
           {notification.senderName[0]}
@@ -31,12 +21,12 @@ export const NotificationCard: React.FC<Props> = ({
         <Button
           type="text"
           icon={<CloseOutlined />}
-          onClick={e => {
-            e.stopPropagation()
-            onDelete()
+          onClick={(e) => {
+            e.stopPropagation();
+            onDelete();
           }}
         />
       </Flex>
     </Card>
-  )
-}
+  );
+};

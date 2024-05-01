@@ -1,15 +1,15 @@
-'use client'
-
 import { useEffect, useState } from 'react'
 import { Button, Card, Col, Row, Typography, Space } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
-const { Title, Text } = Typography
-import { useAuthentication } from '@web/modules/authentication'
+import { useAuthentication } from '../../../modules/authentication'
 import dayjs from 'dayjs'
 import { useSnackbar } from 'notistack'
 import { useRouter, useParams } from 'next/navigation'
-import { Api, Model } from '@web/domain'
-import { PageLayout } from '@web/layouts/Page.layout'
+import { Api, Model } from '../../../domain'
+import { PageLayout } from '../../../layouts/Page.layout'
+
+
+const { Title, Text } = Typography
 
 export default function PropertiesPage() {
   const router = useRouter()

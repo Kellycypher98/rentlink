@@ -1,14 +1,15 @@
-'use client'
 
 import { Button, Form, Input, Typography } from 'antd'
 import { HomeOutlined } from '@ant-design/icons'
-const { Title, Text } = Typography
-import { useAuthentication } from '@web/modules/authentication'
+import { useAuthentication } from '../.../../../../../modules/authentication'
 import dayjs from 'dayjs'
 import { useSnackbar } from 'notistack'
 import { useRouter, useParams } from 'next/navigation'
-import { Api, Model } from '@web/domain'
-import { PageLayout } from '@web/layouts/Page.layout'
+import { Api, Model } from '../../../../domain'
+import { PageLayout } from '../../../../layouts/Page.layout'
+
+
+const { Title, Text } = Typography
 
 export default function AddNewPropertyPage() {
   const router = useRouter()
@@ -18,10 +19,7 @@ export default function AddNewPropertyPage() {
 
   const [form] = Form.useForm()
 
-  const handleSubmit = async (values: {
-    address: string
-    description?: string
-  }) => {
+  const handleSubmit = async (values) => {
     if (!userId) {
       enqueueSnackbar('User must be logged in to add a property', {
         variant: 'error',

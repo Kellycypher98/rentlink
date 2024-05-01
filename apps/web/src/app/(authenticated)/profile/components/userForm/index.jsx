@@ -1,23 +1,18 @@
-import { Model } from '@web/domain'
+import { Model } from '../../../../../domain'
 import { Button, Form, Input } from 'antd'
 import React from 'react'
 
-type Props = {
-  user: Model.User
-  isLoading: boolean
-  isDisabled: boolean
-  onSubmit: (user: Partial<Model.User>) => void
-}
 
-export const UserForm: React.FC<Props> = ({
+
+export const UserForm = ({
   user,
   isLoading,
   isDisabled,
   onSubmit,
-}: Props) => {
+}) => {
   const [form] = Form.useForm()
 
-  const handleSubmit = (values: Partial<Model.User>) => {
+  const handleSubmit = (values) => {
     onSubmit(values)
   }
 
